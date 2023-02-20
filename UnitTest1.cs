@@ -21,15 +21,15 @@ namespace AutomationProject_01
         [SetUp]
         public void Setup()
         {
-        }
-
-        [Test]
-        public void Test_001_SignupElementsValidation()
-        {
             //Ir al sitio web
             driver.Navigate().GoToUrl(url);
             //Maximizar la ventana del sitio web
             driver.Manage().Window.Maximize();
+        }
+
+        [Test]
+        public void Test_001_SignupElementsValidation()
+        {            
             //Validando que el signupName este presente
             elementName = driver.FindElement(By.XPath(signupNameXPath));
             bool signupNameValidation = elementName.Displayed;
@@ -46,5 +46,22 @@ namespace AutomationProject_01
             //Assertion final
             Assert.IsTrue(finalValidation);
         }
+        [Test]
+        public void Test_002_SignUp()
+        {
+            driver.FindElement(By.XPath(signupNameXPath)).SendKeys("Pedro");
+            driver.FindElement(By.XPath(signupEmailXPath)).SendKeys("pedro32123@gmail.com");
+            driver.FindElement(By.XPath(signupButtonXPath)).Click();
+            elementName = driver.FindElement(By.XPath("//div[@class='login-form']/h2/b"));
+            bool validation = elementName.Displayed;
+            Console.WriteLine("Resultado final = " + validation);
+            Assert.IsTrue(validation);
+        }    
+        [TearDown]
+        public void QuitPage()
+        { 
+            //driver.Close();
+        }
+
     }
 }
